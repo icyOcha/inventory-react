@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,9 +22,10 @@ function Login() {
       });
 
       const result = await response.json();
-      localStorage.setItem("TOKEN", result.token);
-
-      
+      if (response.ok) {
+        localStorage.setItem("token", result.token);
+        navigate("/profile");
+      }
     } catch (error) {
       console.log(error);
     }
